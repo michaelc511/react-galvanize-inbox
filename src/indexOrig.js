@@ -4,7 +4,11 @@ import './index.css';
 // import App from './App';
 // import registerServiceWorker from './registerServiceWorker';
 
-import InboxPage from './components/InboxPage';
+import InboxPageLayout from './components/InboxPageLayout';
+
+import ToolbarComponent from './components/ToolbarComponent';
+import MessagesComponent from './components/MessagesComponent';
+import ComposeFormComponent from './components/ComposeFormComponent';
 
 import './index.css';
 
@@ -70,16 +74,22 @@ let messages = [
 ];
 let selectedMessageIds = [2, 3];
 
-// let selectedMessageCount = selectedMessageIds.length;
+let selectedMessageCount = selectedMessageIds.length;
 
 let showComposeForm = true;
 
 ReactDOM.render(
-  <InboxPage
-    messages={messages} //
-    selectedMessageIds={selectedMessageIds} //
-    showComposeForm={showComposeForm}
-  />,
+  <InboxPageLayout>
+    <ToolbarComponent //
+      messages={messages} //
+      selectedMessageCount={selectedMessageCount}
+    />
+    <MessagesComponent //
+      messages={messages} //
+      selectedMessageIds={selectedMessageIds}
+    />
+    {showComposeForm && <ComposeFormComponent />}
+  </InboxPageLayout>,
   document.getElementById('root')
 );
 // ReactDOM.render(<App />, document.getElementById('root'));
