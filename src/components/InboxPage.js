@@ -12,6 +12,7 @@ export default function InboxPage(props) {
       selectedMessageCount={props.selectedMessageCount}
       selectedMessageIds={props.selectedMessageIds}
       checkItem={props.checkItem}
+      showComposeForm={props.showComposeForm} //
       //
       onSelectMessage={props.onSelectMessage}
       onDeselectMessage={props.onDeselectMessage}
@@ -26,6 +27,9 @@ export default function InboxPage(props) {
       onApplyLabelSelectedMessages={props.onApplyLabelSelectedMessages}
       onRemoveLabelSelectedMessages={props.onRemoveLabelSelectedMessages}
       onDeleteSelectedMessages={props.onDeleteSelectedMessages}
+      //
+      onSubmit={props.onSubmit}
+      onCancel={props.onCancel}
     />
   );
 }

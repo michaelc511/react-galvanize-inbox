@@ -121,6 +121,8 @@ let onMarkAsReadMessage = function(itemId) {
 
 let onOpenComposeForm = function() {
   console.log('onOpenComposeForm');
+  showComposeForm = true;
+  render();
 };
 
 let onSelectAllMessages = function() {
@@ -215,13 +217,39 @@ let onDeleteSelectedMessages = function() {
   render();
 };
 
+let onSubmit = function({ subject, body }) {
+  console.log('onSubmit ');
+  // console.log('sub ' + subject);
+  // console.log('body' + body);
+  //
+  // add to the messages
+  console.log(messages[messages.length - 1].id);
+  let nextID = messages[messages.length - 1].id + 1;
+  messages.unshift({
+    id: nextID,
+    subject: subject,
+    read: false,
+    starred: false,
+    labels: []
+  });
+  showComposeForm = false;
+  render();
+};
+
+let onCancel = function() {
+  console.log('onCancel ');
+  showComposeForm = false;
+
+  render();
+};
+
 let checkItem = function(itemId, type) {
   console.log('type: ' + type);
   render();
 };
 ///////////////////////////////////////////
 
-let showComposeForm = true;
+let showComposeForm = undefined;
 
 function render() {
   ReactDOM.render(
@@ -248,6 +276,9 @@ function render() {
       onApplyLabelSelectedMessages={onApplyLabelSelectedMessages}
       onRemoveLabelSelectedMessages={onRemoveLabelSelectedMessages}
       onDeleteSelectedMessages={onDeleteSelectedMessages}
+      //
+      onSubmit={onSubmit}
+      onCancel={onCancel}
     />,
     document.getElementById('root')
   );

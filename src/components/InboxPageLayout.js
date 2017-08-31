@@ -14,6 +14,7 @@ export default function InboxPageLayout(props) {
         messages={props.messages} //
         selectedMessageCount={props.selectedMessageCount}
         //
+        showComposeForm={props.showComposeForm} //
         onOpenComposeForm={props.onOpenComposeForm}
         onSelectAllMessages={props.onSelectAllMessages}
         onDeselectAllMessages={props.onDeselectAllMessages}
@@ -23,8 +24,13 @@ export default function InboxPageLayout(props) {
         onRemoveLabelSelectedMessages={props.onRemoveLabelSelectedMessages}
         onDeleteSelectedMessages={props.onDeleteSelectedMessages}
       />
+      {props.showComposeForm && <ComposeFormComponent onSubmit={props.onSubmit} onCancel={props.onCancel} />}
 
-      <ComposeFormComponent />
+      {/* <ComposeFormComponent
+        //
+        onSubmit={props.onSubmit}
+        onCancel={props.onCancel}
+      /> */}
 
       <MessagesComponent //
         messages={props.messages} //

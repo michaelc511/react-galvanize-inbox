@@ -7,7 +7,7 @@ import ComposeFormComponent from './components/ComposeFormComponent';
 export default function InboxPage(props) {
   //
 
-  console.log(props);
+  console.log('Props' + props);
   return (
     <div className="InboxPageLayout">
       <ToolbarComponent //
@@ -20,7 +20,7 @@ export default function InboxPage(props) {
         selectedMessageIds={props.selectedMessageIds}
       />
 
-      <ComposeFormComponent />
+      {props.showComposeForm && <ComposeFormComponent onSubmit={props.onSubmit} onCancel={props.onCancel} />}
     </div>
   );
 }
