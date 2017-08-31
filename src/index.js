@@ -13,7 +13,7 @@ let messages = [
     id: 1,
     subject: "You can't input the protocol without calculating the mobile RSS protocol!",
     read: false,
-    starred: true,
+    starred: false,
     labels: ['dev', 'personal']
   },
   {
@@ -34,7 +34,7 @@ let messages = [
   {
     id: 4,
     subject: 'We need to program the primary TCP hard drive!',
-    read: true,
+    read: false,
     starred: false,
     selected: true,
     labels: []
@@ -49,38 +49,210 @@ let messages = [
   {
     id: 6,
     subject: 'We need to back up the wireless GB driver!',
-    read: true,
+    read: false,
     starred: true,
     labels: []
   },
   {
     id: 7,
     subject: 'We need to index the mobile PCI bus!',
-    read: true,
+    read: false,
     starred: false,
     labels: ['dev', 'personal']
   },
   {
     id: 8,
     subject: 'If we connect the sensor, we can get to the HDD port through the redundant IB firewall!',
-    read: true,
+    read: false,
     starred: true,
     labels: []
   }
 ];
-let selectedMessageIds = [2, 3];
+let selectedMessageIds = [1, 3];
 
-// let selectedMessageCount = selectedMessageIds.length;
+let selectedMessageCount = selectedMessageIds.length;
+
+//Functions ///////////////////////////////
+let onSelectMessage = function(itemId) {
+  selectedMessageIds.push(itemId);
+  render();
+};
+
+let onDeselectMessage = function(itemId) {
+  let found = selectedMessageIds.indexOf(itemId);
+  selectedMessageIds.splice(found, 1);
+  render();
+};
+
+let onStarMessage = function(itemId) {
+  let matchedObject = messages.find(function(message) {
+    if (message.id === itemId) {
+      return message.id;
+    }
+    return undefined;
+  });
+
+  matchedObject.starred = true;
+  render();
+};
+
+let onUnstarMessage = function(itemId) {
+  let matchedObject = messages.find(function(message) {
+    if (message.id === itemId) {
+      return message.id;
+    }
+    return undefined;
+  });
+  matchedObject.starred = false;
+  render();
+};
+
+let onMarkAsReadMessage = function(itemId) {
+  console.log('READ');
+  let matchedObject = messages.find(function(message) {
+    if (message.id === itemId) {
+      return message.id;
+    }
+    return undefined;
+  });
+  matchedObject.read = true;
+  render();
+};
+
+let onOpenComposeForm = function() {
+  console.log('onOpenComposeForm');
+};
+
+let onSelectAllMessages = function() {
+  console.log('onSelectAllMessages');
+  let arr2 = [];
+
+  arr2 = messages.map(function(message) {
+    //
+    return message.id;
+  }, 0);
+
+  selectedMessageIds = selectedMessageIds.concat(arr2); //[1, 2];
+  console.log('SelecAll ' + selectedMessageIds);
+  selectedMessageCount = selectedMessageIds.length;
+
+  render();
+};
+
+let onDeselectAllMessages = function() {
+  console.log('onDeselectAllMessages');
+  selectedMessageIds = [];
+  selectedMessageCount = selectedMessageIds.length;
+  console.log(selectedMessageIds);
+  render();
+  selectedMessageCount = 1;
+  console.log('xxxxxx' + selectedMessageCount);
+};
+
+let onMarkAsReadSelectedMessages = function() {
+  console.log('onMarkAsReadSelectedMessages');
+  messages.forEach(function(message) {
+    message.read = true;
+  });
+  render();
+};
+
+let onMarkAsUnreadSelectedMessages = function() {
+  console.log('honMarkAsUnreadSelectedMessagesi');
+  messages.forEach(function(message) {
+    message.read = false;
+  });
+  render();
+};
+
+let onApplyLabelSelectedMessages = function(label) {
+  console.log('onApplyLabelSelectedMessages');
+  console.log(label);
+  //
+  selectedMessageIds.forEach(function(messageId) {
+    messages.forEach(function(message) {
+      if (message.id === messageId) {
+        if (!message.labels.includes(label)) {
+          message.labels.push(label);
+        }
+      }
+    });
+    //messages[element].labels.push(label);
+  });
+  render();
+};
+
+let onRemoveLabelSelectedMessages = function(label) {
+  console.log('onRemoveLabelSelectedMessages');
+  selectedMessageIds.forEach(function(messageId) {
+    messages.forEach(function(message) {
+      if (message.id === messageId) {
+        if (message.labels.includes(label)) {
+          message.labels.splice(message.labels.indexOf(label), 1);
+        }
+      }
+    });
+    //messages[element].labels.push(label);
+  });
+  render();
+};
+
+let onDeleteSelectedMessages = function() {
+  console.log('onDeleteSelectedMessages');
+  selectedMessageIds.forEach(function(messageId) {
+    // messages.forEach(function(message) {
+    //   messag
+    // });
+
+    messages.forEach(function(message, index) {
+      if (message.id === messageId) {
+        console.log(index);
+        messages.splice(index, 1);
+        return index;
+      }
+    });
+  });
+  render();
+};
+
+let checkItem = function(itemId, type) {
+  console.log('type: ' + type);
+  render();
+};
+///////////////////////////////////////////
 
 let showComposeForm = true;
 
-ReactDOM.render(
-  <InboxPage
-    messages={messages} //
-    selectedMessageIds={selectedMessageIds} //
-    showComposeForm={showComposeForm}
-  />,
-  document.getElementById('root')
-);
+function render() {
+  ReactDOM.render(
+    <InboxPage
+      messages={messages} //
+      selectedMessageIds={selectedMessageIds} //
+      selectedMessageCount={selectedMessageCount}
+      showComposeForm={showComposeForm} //
+      checkItem={checkItem}
+      //
+      onSelectMessage={onSelectMessage}
+      onDeselectMessage={onDeselectMessage}
+      //
+      onStarMessage={onStarMessage}
+      onUnstarMessage={onUnstarMessage}
+      //
+      onMarkAsReadMessage={onMarkAsReadMessage}
+      //
+      onOpenComposeForm={onOpenComposeForm}
+      onSelectAllMessages={onSelectAllMessages}
+      onDeselectAllMessages={onDeselectAllMessages}
+      onMarkAsReadSelectedMessages={onMarkAsReadSelectedMessages}
+      onMarkAsUnreadSelectedMessages={onMarkAsUnreadSelectedMessages}
+      onApplyLabelSelectedMessages={onApplyLabelSelectedMessages}
+      onRemoveLabelSelectedMessages={onRemoveLabelSelectedMessages}
+      onDeleteSelectedMessages={onDeleteSelectedMessages}
+    />,
+    document.getElementById('root')
+  );
+}
+
+render();
 // ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();

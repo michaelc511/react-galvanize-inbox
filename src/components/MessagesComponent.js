@@ -2,7 +2,16 @@ import React from 'react';
 
 import MessageComponent from './MessageComponent';
 
-export default function MessagesComponent({ messages, selectedMessageIds }) {
+export default function MessagesComponent({
+  messages,
+  selectedMessageIds,
+  checkItem,
+  onSelectMessage,
+  onDeselectMessage,
+  onStarMessage,
+  onUnstarMessage,
+  onMarkAsReadMessage
+}) {
   //
   return (
     // start of loop
@@ -27,7 +36,14 @@ export default function MessagesComponent({ messages, selectedMessageIds }) {
           <MessageComponent
             selected={selected} //
             message={message} //
-            key={message.id}
+            key={message.id} //
+            checkItem={checkItem}
+            //
+            onSelectMessage={onSelectMessage}
+            onDeselectMessage={onDeselectMessage}
+            onStarMessage={onStarMessage}
+            onUnstarMessage={onUnstarMessage}
+            onMarkAsReadMessage={onMarkAsReadMessage}
           />
         );
       })}
