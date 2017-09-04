@@ -10,6 +10,7 @@ export default function InboxPageLayout(props) {
 
   return (
     <div className="InboxPageLayout">
+      {console.log(props)}
       <ToolbarComponent //
         messages={props.messages} //
         selectedMessageCount={props.selectedMessageCount}
@@ -25,12 +26,6 @@ export default function InboxPageLayout(props) {
         onDeleteSelectedMessages={props.onDeleteSelectedMessages}
       />
       {props.showComposeForm && <ComposeFormComponent onSubmit={props.onSubmit} onCancel={props.onCancel} />}
-
-      {/* <ComposeFormComponent
-        //
-        onSubmit={props.onSubmit}
-        onCancel={props.onCancel}
-      /> */}
 
       <MessagesComponent //
         messages={props.messages} //

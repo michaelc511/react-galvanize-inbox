@@ -13,6 +13,9 @@ export default function MessagesComponent({
   onMarkAsReadMessage
 }) {
   //
+  //console.log('MessagesComponent');
+  //  console.log(selectedMessageIds.length);
+
   return (
     // start of loop
     <div>
@@ -20,18 +23,25 @@ export default function MessagesComponent({
         let selected = false;
 
         // if message.id === selectedIDs then set true
-        //  console.log('array: ' + Array.isArray(selectedMessagesIds));
-        if (
-          selectedMessageIds.find(selectedId => {
-            if (selectedId === message.id) {
-              return 100;
-            } else {
-              return 0;
-            }
-          }) > 0
-        ) {
+        //console.log('array: ' + Array.isArray(selectedMessageIds));
+
+        //////////////
+
+        let index = selectedMessageIds.findIndex(
+          // callback function
+          // 1 verify each id with the message id
+          selectedId => {
+            return selectedId === message.id;
+          } // end of callback, return 100 if found, -1 if not
+        );
+        //console.log('INDEX ' + index);
+
+        if (index > -1) {
+          // if array has the selectedID,
+          //console.log('SET TRUE >.............');
           selected = true;
-        }
+        } // end of if
+
         return (
           <MessageComponent
             selected={selected} //

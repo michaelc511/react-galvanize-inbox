@@ -58,9 +58,13 @@ export default function MessageComponent({
   }
 
   //  console.log('MessageCOmp Props: ' + checkItem);
-  if (checkStatus === 'checked') {
-    console.log(message.id + ' Checked on MsgComp: ' + checkStatus + '');
+  // if (checkStatus === 'checked') {
+  //   console.log(message.id + ' Checked on MsgComp: ' + checkStatus + '');
+  // }
+  if (!message.labels) {
+    message.labels = [];
   }
+  //console.log(message.subject + ' ' + message.starred);
 
   return (
     <div className={`row message ${readStatus} ${selectedStatus} MessageComponent`}>
