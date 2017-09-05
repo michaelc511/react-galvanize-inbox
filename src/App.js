@@ -3,10 +3,10 @@ import './index.css';
 
 import InboxPage from './components/InboxPage';
 //
-import getMessages from './requests/getMessages';
-import updateMessage from './requests/updateMessage';
-import deleteMessage from './requests/deleteMessage';
-import createMessage from './requests/createMessage';
+import getMessages from './api/getMessages';
+import updateMessage from './api/updateMessage';
+import deleteMessage from './api/deleteMessage';
+import createMessage from './api/createMessage';
 
 import './index.css';
 
@@ -126,7 +126,9 @@ export default class App extends Component {
           return { messages: newMessages };
         }); // end of setState
       })
-      .catch(error => {});
+      .catch(error => {
+        console.log('ERROR ' + error.message);
+      });
   };
 
   // 5D _onUnstarMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

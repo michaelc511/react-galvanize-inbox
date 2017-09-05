@@ -4,8 +4,8 @@ export default function getMessages() {
   // return fetch('/data/messages.json') //
   //   .then(response => response.json());
 
-  ///return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages', {
-  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocuZZZ/messages', {
+  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages', {
+    ///return fetch('https://api.airtable.com/v0/appnspObUvyNgSocuZZZ/messages', {
     headers: {
       Authorization: 'Bearer keyG8wwLRrkdRDmjp'
     }

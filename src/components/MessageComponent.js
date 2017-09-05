@@ -65,7 +65,18 @@ export default function MessageComponent({
     message.labels = [];
   }
   //console.log(message.subject + ' ' + message.starred);
+  let responsible = '';
+  if (message.id === 'error') {
+    if (message.subject.substring(0, 3) === '404') {
+      responsible = ' Call the network dude.';
+    }
 
+    return (
+      <div>
+        Error = {message.subject}. {responsible}
+      </div>
+    );
+  }
   return (
     <div className={`row message ${readStatus} ${selectedStatus} MessageComponent`}>
       <div className="col-xs-1">
