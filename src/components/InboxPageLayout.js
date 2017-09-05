@@ -10,7 +10,7 @@ export default function InboxPageLayout(props) {
 
   return (
     <div className="InboxPageLayout">
-      {console.log(props)}
+      {/* {console.log(props)} */}
       <ToolbarComponent //
         messages={props.messages} //
         selectedMessageCount={props.selectedMessageCount}

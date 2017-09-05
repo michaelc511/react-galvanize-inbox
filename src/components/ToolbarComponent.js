@@ -28,16 +28,7 @@ export default function ToolbarComponent({
     disabled = 'disabled';
   }
 
-  let unread = 0;
-
-  unread = messages.reduce(function(sum, message) {
-    //console.log('msg: ' + message.read);
-    if (message.read === true) {
-      return (sum = sum + 1);
-    } else {
-      return sum;
-    }
-  }, 0);
+  let unread = messages.filter(message => !message.read).length;
 
   //console.log('unread ' + unread);
   // FUnctions /////////////////////////////
@@ -47,21 +38,14 @@ export default function ToolbarComponent({
   }
   function handleOnSelectAllMessages(event) {
     //event.preventDefault();
-    console.log(selectedMessageCount);
+    //console.log(selectedMessageCount);
     if (selectedMessageCount === 0) {
       onSelectAllMessages();
     } else {
       onDeselectAllMessages();
     }
   }
-  function handleMarkRead(event) {
-    event.preventDefault();
-    if (selectedMessageCount === 0) {
-      onMarkAsReadSelectedMessages();
-    } else {
-      onMarkAsUnreadSelectedMessages();
-    }
-  }
+
   function handleOnMarkAsReadSelectedMessages(event) {
     event.preventDefault();
     onMarkAsReadSelectedMessages();
@@ -81,9 +65,9 @@ export default function ToolbarComponent({
     onRemoveLabelSelectedMessages(event.target.value);
   }
 
-  function onDeleteSelectedMessages(event) {
+  function onHandleDeleteSelectedMessages(event) {
     event.preventDefault();
-    onRemoveLabelSelectedMessages(event.target.value);
+    onDeleteSelectedMessages(event.target.value);
   }
   ////
   ///////////////////////////////////////////
@@ -93,7 +77,7 @@ export default function ToolbarComponent({
       <div className="col-md-12">
         <p className="pull-right">
           <span className="badge badge" />
-          unread messages
+          {unread} unread messages
         </p>
 
         <a className="btn btn-danger" onClick={handleOnOpenComposeForm}>
@@ -126,7 +110,7 @@ export default function ToolbarComponent({
           <option value="gschool">gschool</option>
         </select>
 
-        <button onClick={onDeleteSelectedMessages} className="btn btn-default" disabled={disabled}>
+        <button onClick={onHandleDeleteSelectedMessages} className="btn btn-default" disabled={disabled}>
           <i className="fa fa-trash-o" />
         </button>
       </div>

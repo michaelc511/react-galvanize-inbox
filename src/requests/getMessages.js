@@ -4,7 +4,7 @@ export default function getMessages() {
   // return fetch('/data/messages.json') //
   //   .then(response => response.json());
 
-  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages?maxRecords=8&view=Grid%20view', {
+  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages', {
     headers: {
       Authorization: 'Bearer keyG8wwLRrkdRDmjp'
     }

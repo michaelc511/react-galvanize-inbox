@@ -15,7 +15,7 @@ export default function MessagesComponent({
   //
   //console.log('MessagesComponent');
   //  console.log(selectedMessageIds.length);
-
+  //console.log('messagecomp');
   return (
     // start of loop
     <div>
