@@ -109,14 +109,15 @@ export default class App extends Component {
     })
       .then(updatedMessage => {
         // 1. set the state
-        //console.log('1');
+        console.log('onStar');
+        console.log(updatedMessage);
         this.setState(prevState => {
           let newMessages = prevState.messages;
           // get a new array
-          newMessages.map(
+          newMessages = newMessages.map(
             message =>
               message.id === itemId //
-                ? (message.starred = true) //
+                ? updatedMessage //(message.starred = true) //
                 : message
           );
 
@@ -143,10 +144,10 @@ export default class App extends Component {
         this.setState(prevState => {
           let newMessages = prevState.messages;
           // get a new array
-          newMessages.map(
+          newMessages = newMessages.map(
             message =>
               message.id === itemId //
-                ? (message.starred = false) //
+                ? updatedMessage //(message.starred = false) //
                 : message
           );
 
@@ -172,10 +173,10 @@ export default class App extends Component {
         this.setState(prevState => {
           let newMessages = prevState.messages;
           // get a new array
-          newMessages.map(
+          newMessages = newMessages.map(
             message =>
               message.id === itemId //
-                ? (message.read = true) //
+                ? updatedMessage //(message.read = true) //
                 : message
           );
 
@@ -250,10 +251,10 @@ export default class App extends Component {
           this.setState(prevState => {
             let newMessages = prevState.messages;
             // get a new array
-            newMessages.map(
+            newMessages = newMessages.map(
               message =>
                 message.id === itemId //
-                  ? (message.read = true) //
+                  ? updatedMessage // (message.read = true) //
                   : message
             );
 
@@ -275,7 +276,7 @@ export default class App extends Component {
       // 2 do the updateMessage
       // 3 setState for each Message
       updateMessage(itemId, {
-        read: true
+        read: false
       })
         .then(updatedMessage => {
           // 3. set the state
@@ -283,10 +284,10 @@ export default class App extends Component {
           this.setState(prevState => {
             let newMessages = prevState.messages;
             // get a new array
-            newMessages.map(
+            newMessages = newMessages.map(
               message =>
                 message.id === itemId //
-                  ? (message.read = false) //
+                  ? updatedMessage //(message.read = false) //
                   : message
             );
 
@@ -321,10 +322,10 @@ export default class App extends Component {
           this.setState(prevState => {
             let newMessages = prevState.messages;
             // get a new array
-            newMessages.map(
+            newMessages = newMessages.map(
               message =>
                 message.id === itemId //
-                  ? (message.labels = labels) //
+                  ? updatedMessage //(message.labels = labels) //
                   : message
             );
 
@@ -362,10 +363,10 @@ export default class App extends Component {
           this.setState(prevState => {
             let newMessages = prevState.messages;
             // get a new array
-            newMessages.map(
+            newMessages = newMessages.map(
               message =>
                 message.id === itemId //
-                  ? (message.labels = labels) //
+                  ? updatedMessage //(message.labels = labels) //
                   : message
             );
 
