@@ -6,7 +6,7 @@ import ComposeFormComponent from './ComposeFormComponent';
 
 export default function InboxPageLayout(props) {
   //
-  //console.log('IndexPageLayout Props: ' + props.checkItem);
+  //  console.log('IndexPageLayout Selected: ' + props.selectedMessageIds);
 
   return (
     <div className="InboxPageLayout">
@@ -19,6 +19,8 @@ export default function InboxPageLayout(props) {
         onOpenComposeForm={props.onOpenComposeForm}
         onSelectAllMessages={props.onSelectAllMessages}
         onDeselectAllMessages={props.onDeselectAllMessages}
+        //
+        onMarkAsReadMessage={props.onMarkAsReadMessage}
         onMarkAsReadSelectedMessages={props.onMarkAsReadSelectedMessages}
         onMarkAsUnreadSelectedMessages={props.onMarkAsUnreadSelectedMessages}
         onApplyLabelSelectedMessages={props.onApplyLabelSelectedMessages}

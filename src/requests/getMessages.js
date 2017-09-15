@@ -1,13 +1,13 @@
-export default function getMessages() {
+export default function getMessages({ databaseId, token }) {
   // gets the Response object and chain it
   // get response.json() to parse it
   // return fetch('/data/messages.json') //
   //   .then(response => response.json());
 
   ///return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages', {
-  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocuZZZ/messages', {
+  return fetch(`https://api.airtable.com/v0/${databaseId}/messages`, {
     headers: {
-      Authorization: 'Bearer keyG8wwLRrkdRDmjp'
+      Authorization: `Bearer ${token}`
     }
   })
     .then(handleErrors)

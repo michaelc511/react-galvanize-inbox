@@ -1,18 +1,15 @@
-export default function deleteMessages(messageId) {
-  // gets the Response object and chain it
-  // get response.json() to parse it
-  // return fetch('/data/messages.json') //
-  //   .then(response => response.json());
-
-  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages/' + messageId, {
+export default function deleteMessages(messageId, { databaseId, token }) {
+  //console.log('deteMessag');
+  return fetch(`https://api.airtable.com/v0/${databaseId}/messages/${messageId}`, {
     method: 'DELETE',
     headers: {
-      Authorization: 'Bearer keyG8wwLRrkdRDmjp'
+      Authorization: `Bearer ${token}`
     }
   })
     .then(response => response.json())
     .then(data => {
       // console.log(messageId);
+      // console.log('deleteMessage Method');
       // console.log(data);
       return data;
     }); // end of then

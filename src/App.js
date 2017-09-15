@@ -1,16 +1,40 @@
 import React, { Component } from 'react';
 import './index.css';
 
+// import env from './env';
+
 import InboxPage from './components/InboxPage';
 //
-import getMessages from './api/getMessages';
-import updateMessage from './api/updateMessage';
-import deleteMessage from './api/deleteMessage';
-import createMessage from './api/createMessage';
+// import getMessages from './api/getMessages';
+// import updateMessage from './api/updateMessage';
+// import deleteMessage from './api/deleteMessage';
+// import createMessage from './api/createMessage';
+
+import createMessageProcess from './redux/thunks/createMessageProcess';
+import getMessagesProcess from './redux/thunks/getMessagesProcess';
+import deleteMessageProcess from './redux/thunks/deleteMessageProcess';
+import updateMessageProcess from './redux/thunks/updateMessageProcess';
 
 import './index.css';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedMessageIds: [],
+
+      selectedMessageCount: 0, //this.state.selectedMessageIds.length,
+
+      showComposeForm: false,
+      messages: []
+    }; //
+
+    this.props.store.subscribe(() => {
+      this.setState(this.props.store.getState());
+    });
+  }
+
   render() {
     return (
       <InboxPage
@@ -42,152 +66,58 @@ export default class App extends Component {
     );
   } // end of render
 
-  state = {
-    selectedMessageIds: [],
-
-    selectedMessageCount: 0, //this.state.selectedMessageIds.length,
-
-    showComposeForm: false,
-    messages: []
-  }; // end of state
-
   //
   //
   //// MESSAGES FUNCTIONS  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>/////////////////
 
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // 1D load the messages after 'componentDidMount()' >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   componentDidMount() {
-    getMessages() //
-      .then(messages => {
-        //  console.log(messages);
-        this.setState({
-          // array of Objects
-          messages
-        });
-      });
+    this.props.store.dispatch(getMessagesProcess());
   }
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 2D _onSelectMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onSelectMessage = itemId => {
     // console.log('_onSelectMessage');
-    // 1. set the state
-    this.setState(prevState => {
-      //console.log('ITEM' + itemId);
-      // 2. in function, get the prevState
-      const newSelectedMessageIds = prevState.selectedMessageIds;
-      // 3. push variable with itemId
-      newSelectedMessageIds.push(itemId);
-      // 4. return the object with the stte variable to setState
-      return { selectedMessagesIds: newSelectedMessageIds };
-    });
-    // console.log('setting the selectedMessageIds');
+    this.props.store.dispatch({ type: 'SELECT_MESSAGE', itemId });
     // console.log(this.state.selectedMessageIds);
   };
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 3D _onDeselectMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onDeselectMessage = itemId => {
     //console.log('onDeselectMessage');
-    let found = this.state.selectedMessageIds.indexOf(itemId);
-
-    // 1. set the state
-    this.setState(prevState => {
-      //console.log('ITEM' + itemId);
-      // 2. in function, get the prevState
-      const newSelectedMessageIds = prevState.selectedMessageIds;
-      // 3. push variable with itemId
-      newSelectedMessageIds.splice(found, 1);
-      // 4. return the object with the stte variable to setState
-      return { selectedMessagesIds: newSelectedMessageIds };
-    });
+    this.props.store.dispatch({ type: 'DESELECT_MESSAGE', itemId });
   };
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 4D _onStarMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onStarMessage = itemId => {
-    // 1. call updateMessage
-    updateMessage(itemId, {
-      starred: true
-    })
-      .then(updatedMessage => {
-        // 1. set the state
-        console.log('onStar');
-        console.log(updatedMessage);
-        this.setState(prevState => {
-          let newMessages = prevState.messages;
-          // get a new array
-          newMessages = newMessages.map(
-            message =>
-              message.id === itemId //
-                ? updatedMessage //(message.starred = true) //
-                : message
-          );
-
-          //console.log('new Messages');
-          //console.log(newMessages);
-          // 4. return the object with the stte variable to setState
-          return { messages: newMessages };
-        }); // end of setState
-      })
-      .catch(error => {
-        console.log('ERROR ' + error.message);
-      });
+    this.props.store.dispatch(updateMessageProcess(itemId, 'star'));
   };
+  /// DONE! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 5D _onUnstarMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onUnstarMessage = itemId => {
     // 1. call updateMessage
-    updateMessage(itemId, {
-      starred: false
-    })
-      .then(updatedMessage => {
-        // 1. set the state
-        //console.log('1');
-        this.setState(prevState => {
-          let newMessages = prevState.messages;
-          // get a new array
-          newMessages = newMessages.map(
-            message =>
-              message.id === itemId //
-                ? updatedMessage //(message.starred = false) //
-                : message
-          );
-
-          // console.log('new Messages');
-          // console.log(newMessages);
-          // 4. return the object with the stte variable to setState
-          return { messages: newMessages };
-        }); // end of setState
-      })
-      .catch(error => {});
+    this.props.store.dispatch(updateMessageProcess(itemId, 'unstar'));
   };
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 6D _onMarkAsReadMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onMarkAsReadMessage = itemId => {
     //  console.log('READ');
     // 1. call updateMessage
-    updateMessage(itemId, {
-      read: true
-    })
-      .then(updatedMessage => {
-        // 1. set the state
-        //  console.log('1');
-        this.setState(prevState => {
-          let newMessages = prevState.messages;
-          // get a new array
-          newMessages = newMessages.map(
-            message =>
-              message.id === itemId //
-                ? updatedMessage //(message.read = true) //
-                : message
-          );
-
-          // console.log('new Messages');
-          // console.log(newMessages);
-          // 4. return the object with the stte variable to setState
-          return { messages: newMessages };
-        }); // end of setState
-      })
-      .catch(error => {});
+    this.props.store.dispatch(updateMessageProcess(itemId, 'read'));
   };
+
+  _onMarkAsUnReadMessage = itemId => {
+    //  console.log('READ');
+    // 1. call updateMessage
+    this.props.store.dispatch(updateMessageProcess(itemId, 'unread'));
+  };
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // TOOLBAR FUNCTIONS /////
   // 7D _onOpenComposeForm >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -195,216 +125,98 @@ export default class App extends Component {
     // console.log('onOpenComposeForm');
     //
     // console.log(this.state.showComposeForm);
-
-    this.setState({
-      showComposeForm: true
-    });
+    this.props.store.dispatch({ type: 'COMPOSE', showComposeForm: true });
 
     //Ask why this is false after setting true. works fine though ?????????????
     console.log(this.state.showComposeForm);
   };
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 8D _onSelectAllMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onSelectAllMessages = () => {
     //console.log('_onSelectAllMessages');
-
-    /*
-    1) map the arrry to selectedMessageIds
-    2) Add all to selectedMessageIds
-    */
-    this.setState(prevState => {
-      let newArr = prevState.messages.map(message => message.id);
-      // console.log('New Arr');
-      // console.log(newArr);
-      return { selectedMessageIds: newArr, selectedMessageCount: newArr.length };
-    }); // end of setState
+    this.props.store.dispatch({ type: 'SELECT_ALL_MESSAGES' });
   };
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 9D _onDeselectAllMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onDeselectAllMessages = () => {
     //console.log('_onDeselectAllMessages');
-    this.setState({
-      selectedMessageIds: [],
-      selectedMessageCount: 0
-    }); // end of setState
+    this.props.store.dispatch({ type: 'DESELECT_ALL_MESSAGES' });
   };
+
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 10D _onMarkAsReadSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onMarkAsReadSelectedMessages = () => {
     //console.log('_onMarkAsReadSelectedMessages');
-    // 1. do iteration of all messages
-    // 2. update in 'updateMessage' for each iteration
-    // 3. ...
-
-    //console.log(this.state.messages);
-    this.state.messages.forEach(message => {
-      //console.log(message.id);
-      let itemId = message.id;
-      // 2 do the updateMessage
-      // 3 setState for each Message
-      updateMessage(itemId, {
-        read: true
-      })
-        .then(updatedMessage => {
-          // 3. set the state
-          //  console.log('1');
-          this.setState(prevState => {
-            let newMessages = prevState.messages;
-            // get a new array
-            newMessages = newMessages.map(
-              message =>
-                message.id === itemId //
-                  ? updatedMessage // (message.read = true) //
-                  : message
-            );
-
-            // 4. return the object with the stte variable to setState
-            return { messages: newMessages };
-          }); // end of setState
-        })
-        .catch(error => {});
-    }); // end of forEach
+    this.state.selectedMessagesIds.forEach(itemId => {
+      this._onMarkAsReadMessage(itemId);
+    });
   };
+
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 11D _onMarkAsUnreadSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onMarkAsUnreadSelectedMessages = () => {
     //  console.log('_onMarkAsUnreadSelectedMessagesi');
     //console.log(this.state.messages);
-    this.state.messages.forEach(message => {
-      //console.log(message.id);
-      let itemId = message.id;
-      // 2 do the updateMessage
-      // 3 setState for each Message
-      updateMessage(itemId, {
-        read: false
-      })
-        .then(updatedMessage => {
-          // 3. set the state
-          //  console.log('1');
-          this.setState(prevState => {
-            let newMessages = prevState.messages;
-            // get a new array
-            newMessages = newMessages.map(
-              message =>
-                message.id === itemId //
-                  ? updatedMessage //(message.read = false) //
-                  : message
-            );
-
-            // 4. return the object with the stte variable to setState
-            return { messages: newMessages };
-          }); // end of setState
-        })
-        .catch(error => {});
-    }); // end of forEach
+    this.state.selectedMessagesIds.forEach(itemId => {
+      this._onMarkAsUnReadMessage(itemId);
+    });
   };
 
   // 12D _onApplyLabelSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onApplyLabelSelectedMessages = label => {
-    //console.log('_onApplyLabelSelectedMessages');
-    //console.log(label);
+    console.log(this.state.selectedMessagesIds);
+    // this.state.selectedMessagesIds.forEach(itemId => {
+    //   this.props.store.dispatch(updateMessageProcess(itemId, label));
+    // });
+
     this.state.messages.forEach(message => {
-      //console.log(message.id);
+      // get the msgId
       let itemId = message.id;
+      // get the msgLabel
       let labels = message.labels;
+
+      // if label don't include it, add to the label
       if (!labels.includes(label)) {
         labels.push(label);
       }
-
-      // 2 do the updateMessage
-      // 3 setState for each Message
-      updateMessage(itemId, {
-        labels: labels.toString()
-      })
-        .then(updatedMessage => {
-          // 3. set the state
-          //  console.log('1');
-          this.setState(prevState => {
-            let newMessages = prevState.messages;
-            // get a new array
-            newMessages = newMessages.map(
-              message =>
-                message.id === itemId //
-                  ? updatedMessage //(message.labels = labels) //
-                  : message
-            );
-
-            // 4. return the object with the stte variable to setState
-            return { messages: newMessages };
-          }); // end of setState
-        })
-        .catch(error => {});
-    }); // end of forEach
+      this.props.store.dispatch(updateMessageProcess(itemId, 'addLabel', labels));
+    });
   };
 
   // 13D _onRemoveLabelSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onRemoveLabelSelectedMessages = label => {
     //console.log('onRemoveLabelSelectedMessages');
-    this.state.messages.forEach(message => {
-      //console.log(message.id);
-      let itemId = message.id;
-      let labels = message.labels;
-      // if (!labels.includes(label)) {
-      //   labels.push(label);
-      // }
 
+    this.state.messages.forEach(message => {
+      // get the msgId
+      let itemId = message.id;
+      // get the msgLabel
+      let labels = message.labels;
+
+      // if label don't include it, add to the label
       if (labels.includes(label)) {
         labels.splice(labels.indexOf(label), 1);
       }
-
-      // 2 do the updateMessage
-      // 3 setState for each Message
-      updateMessage(itemId, {
-        labels: labels.toString()
-      })
-        .then(updatedMessage => {
-          // 3. set the state
-          //  console.log('1');
-          this.setState(prevState => {
-            let newMessages = prevState.messages;
-            // get a new array
-            newMessages = newMessages.map(
-              message =>
-                message.id === itemId //
-                  ? updatedMessage //(message.labels = labels) //
-                  : message
-            );
-
-            // 4. return the object with the stte variable to setState
-            return { messages: newMessages };
-          }); // end of setState
-        })
-        .catch(error => {});
-    }); // end of forEach
+      this.props.store.dispatch(updateMessageProcess(itemId, 'removeLabel', labels));
+    });
   };
 
+  // DONE ////////////
   // 14D _onDeleteSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onDeleteSelectedMessages = () => {
     //console.log('_onDeleteSelectedMessages');
-    this.state.messages.forEach(message => {
+    this.state.selectedMessageIds.forEach(itemId => {
       //console.log(message.id);
-      let itemId = message.id;
+      //  let itemId = message.id;
       //console.log('item id: ' + itemId);
-
-      deleteMessage(itemId)
-        .then(data => {
-          //console.log(data.id);
-          this.setState(prevState => {
-            prevState.messages.forEach((message, index) => {
-              //message.read = false;
-              // check the label array
-              // if not in then push
-              if (message.id === data.id) {
-                prevState.messages.splice(index, 1);
-              }
-              return message;
-            });
-          }); // end of setState
-        })
-        .catch(error => {});
+      this.props.store.dispatch(deleteMessageProcess(itemId));
     }); // end of forEach
   };
-
+  // DONE /////////////////////////
   // 15 _onSubmit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onSubmit = ({ subject, body }) => {
     //console.log('onSubmit 1');
@@ -419,32 +231,21 @@ export default class App extends Component {
       starred: false,
       labels: ''
     };
-    createMessage(newMessage)
-      .then(newMessage => {
-        // console.log('createMessage ');
-        // console.log(newMessage);
-        //return data;
 
-        this.setState(prevState => {
-          let newMessages = prevState.messages;
-
-          newMessages.unshift(newMessage);
-          return {
-            messages: newMessages,
-            showComposeForm: false
-          };
-        }); // end of setState
-      })
-      .catch(error => {});
+    this.props.store.dispatch(createMessageProcess(newMessage, false));
   };
+
+  /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // 16D _onCancel >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _onCancel = () => {
     //console.log('onCancel ');
-    this.setState({
-      showComposeForm: false
-    });
-    console.log(this.state.showComposeForm);
+    this.props.store.dispatch({ type: 'COMPOSE', showComposeForm: false });
+
+    //   this.setState({
+    //     showComposeForm: false
+    //   });
+    //   console.log(this.state.showComposeForm);
   };
 
   // // 17 _checkItem >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

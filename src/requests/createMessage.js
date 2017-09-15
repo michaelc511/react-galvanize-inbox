@@ -1,10 +1,10 @@
-export default function createMessage(message) {
+export default function createMessage(message, { databaseId, token }) {
   //console.log('updateMessage');
 
-  return fetch('https://api.airtable.com/v0/appnspObUvyNgSocu/messages/', {
+  return fetch(`https://api.airtable.com/v0/${databaseId}/messages`, {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer keyG8wwLRrkdRDmjp',
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({

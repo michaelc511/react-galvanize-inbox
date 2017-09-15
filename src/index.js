@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import setupStore from './redux/setupStore';
+
+const store = setupStore();
+
+ReactDOM.render(<App store={store} />, document.getElementById('root'));
 
 // import InboxPage from './components/InboxPage';
 //

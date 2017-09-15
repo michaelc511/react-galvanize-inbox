@@ -14,8 +14,10 @@ export default function MessagesComponent({
 }) {
   //
   //console.log('MessagesComponent');
-  //  console.log(selectedMessageIds.length);
-  //console.log('messagecomp');
+  //console.log('SELECTED IDS on MESGSCOMP' + selectedMessageIds);
+  // console.log('messagesCOMP ' + messages);
+  // console.log(messages);
+
   return (
     // start of loop
     <div>
@@ -34,7 +36,7 @@ export default function MessagesComponent({
             return selectedId === message.id;
           } // end of callback, return 100 if found, -1 if not
         );
-        //console.log('INDEX ' + index);
+        //  console.log('INDEX ' + index);
 
         if (index > -1) {
           // if array has the selectedID,

@@ -12,7 +12,7 @@ export default function MessageComponent({
 }) {
   //
   let readStatus = 'unread';
-
+  //console.log('message? ' + message.read);
   if (message.read === true) {
     readStatus = 'read';
   }
@@ -57,7 +57,8 @@ export default function MessageComponent({
     //checkItem(message.id, 'check');
   }
 
-  //  console.log('MessageCOmp Props: ' + checkItem);
+  // console.log('MessageCOmp Props: ' + selected);
+  // console.log(selected);
   // if (checkStatus === 'checked') {
   //   console.log(message.id + ' Checked on MsgComp: ' + checkStatus + '');
   // }
@@ -83,7 +84,7 @@ export default function MessageComponent({
         <div className="row">
           <div className="col-xs-2">
             {/* checkbox */}
-            <input type="checkbox" name="checkbox" onChange={handleCheck} checked={checkStatus} />
+            <input type="checkbox" className="checkBox" name="checkbox" onChange={handleCheck} checked={checkStatus} />
           </div>
           <div className="col-xs-2">
             {/* star  */}
@@ -101,7 +102,7 @@ export default function MessageComponent({
           //
         )}
         {/* message */}
-        <a href="." onClick={handleRead}>
+        <a href="." className="msg" onClick={handleRead}>
           {message.subject}
         </a>
       </div>

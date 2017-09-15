@@ -6,6 +6,7 @@ export default function ToolbarComponent({
   onOpenComposeForm,
   onSelectAllMessages,
   onDeselectAllMessages,
+  onMarkAsReadMessage,
   onMarkAsReadSelectedMessages,
   onMarkAsUnreadSelectedMessages,
   onApplyLabelSelectedMessages,
@@ -38,7 +39,7 @@ export default function ToolbarComponent({
   }
   function handleOnSelectAllMessages(event) {
     //event.preventDefault();
-    //console.log(selectedMessageCount);
+    //console.log('MESSAGE COUNT: ' + selectedMessageCount);
     if (selectedMessageCount === 0) {
       onSelectAllMessages();
     } else {
@@ -48,6 +49,7 @@ export default function ToolbarComponent({
 
   function handleOnMarkAsReadSelectedMessages(event) {
     event.preventDefault();
+    //onMarkAsReadMessage();
     onMarkAsReadSelectedMessages();
   }
   ////
