@@ -3,7 +3,7 @@ import React from 'react';
 export default function MessageComponent({
   selected,
   message,
-  checkItem,
+  //checkItem,
   onSelectMessage,
   onDeselectMessage,
   onStarMessage,

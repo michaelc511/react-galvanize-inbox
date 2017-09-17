@@ -32,7 +32,7 @@ export default function InboxPageLayout(props) {
       <MessagesComponent //
         messages={props.messages} //
         selectedMessageIds={props.selectedMessageIds}
-        checkItem={props.checkItem}
+        //  checkItem={props.checkItem}
         //
         onSelectMessage={props.onSelectMessage}
         onDeselectMessage={props.onDeselectMessage}

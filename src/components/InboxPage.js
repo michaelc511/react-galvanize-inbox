@@ -11,7 +11,7 @@ export default function InboxPage(props) {
       messages={props.messages} //
       selectedMessageCount={props.selectedMessageCount}
       selectedMessageIds={props.selectedMessageIds}
-      checkItem={props.checkItem}
+      //  checkItem={props.checkItem}
       showComposeForm={props.showComposeForm} //
       //
       onSelectMessage={props.onSelectMessage}

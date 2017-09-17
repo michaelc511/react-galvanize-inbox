@@ -1,4 +1,4 @@
-import updateMessage from '../../api/updateMessage';
+//import updateMessage from '../../api/updateMessage';
 // import deleteMessage from '../../api/deleteMessage';
 // import createMessage from '../../api/createMessage';
 
@@ -74,8 +74,8 @@ export default function rootReducer(
         return message.id !== action.itemId;
         //}
       });
-      console.log('theState');
-      console.log(theState);
+      // console.log('theState');
+      // console.log(theState);
       return { ...currentState, messages: theState };
 
     case 'UPDATE_MESSAGE':
@@ -83,10 +83,16 @@ export default function rootReducer(
       // 2 star
       // 3 unstar
       // 4 labels
-      console.log('rootReducer');
+      console.log('rootReducer ' + action.type);
       console.log(action.itemId);
       console.log(action.message);
       console.log(action.updateType);
+
+      // delete later ok?
+      currentState.selectedMessageIds.forEach(itemId => {
+        console.log('haha : ' + itemId);
+      });
+
       if (
         action.updateType === 'dev' ||
         action.updateType === 'personal' ||
@@ -97,11 +103,13 @@ export default function rootReducer(
         action.updateType === 'star' ||
         action.updateType === 'unstar' ||
         action.updateType === 'read' ||
-        action.updateType === 'unread'
+        action.updateType === 'unread' ||
+        action.updateType === 'addLabel' ||
+        action.updateType === 'removeLabel'
       ) {
         let newMessages = currentState.messages;
         // get a new array
-        console.log('hi......' + action.updateType);
+        console.log('Action type ' + action.updateType);
         newMessages = newMessages.map(
           message =>
             message.id === action.itemId //
@@ -111,51 +119,40 @@ export default function rootReducer(
         console.log(newMessages);
 
         return { ...currentState, messages: newMessages };
-      } else if (action.update === 'readSelected' || action.update === 'unreadSelected') {
-        // 1 get current messages
-        // 2 map to selected based on selected array
-        // 3 set to read or unread based on action update type
-        let read = false;
-        if (action.update === 'readSelected') {
-          read = true;
-        }
-        let newMessages = currentState.messages;
-
-        let selectedMessageIds = currentState.selectedMessageIds;
-        selectedMessageIds.forEach(msgid => {
-          console.log('selected ids: ' + msgid);
-
-          updateMessage(msgid, {
-            read: read
-          }) // end of updateMsg
-            .then(updatedMessage => {
-              newMessages = newMessages.map(
-                message =>
-                  message.id === msgid //
-                    ? updatedMessage //(message.read = false) //
-                    : message
-              ); // end of map
-            }); // end of then
-          console.log(newMessages);
-          // newMessages = newMessages.map(function(message) {
-          //   if (message.id === msgid) {
-          //     message.read = read;
-          //   } else {
-          //     message.read = message.read;
-          //   } //
-          //   return message;
-          // });
-        });
-        // get a new array
-        // newMessages = newMessages.map(
-        //   message =>
-        //     message.id === action.itemId //
-        //       ? action.updatedMessage //(message.starred = true) //
-        //       : message
-        // );
-
-        return { ...currentState, messages: newMessages };
       } else {
+        //
+        // else if (action.update === 'readSelected' || action.update === 'unreadSelected') {
+        //   //
+        //   // NOT GOING TO WORK AS reducer can't run Update, only PROCESSES can
+        //
+        //   let read = false;
+        //   if (action.update === 'readSelected') {
+        //     read = true;
+        //   }
+        //   let newMessages = currentState.messages;
+        //
+        //   let selectedMessageIds = currentState.selectedMessageIds;
+        //   selectedMessageIds.forEach(msgid => {
+        //     console.log('selected ids: ' + msgid);
+        //
+        //     updateMessage(msgid, {
+        //       read: read
+        //     }) // end of updateMsg
+        //       .then(updatedMessage => {
+        //         newMessages = newMessages.map(
+        //           message =>
+        //             message.id === msgid //
+        //               ? updatedMessage //(message.read = false) //
+        //               : message
+        //         ); // end of map
+        //       }); // end of then
+        //     console.log(newMessages);
+        //   });
+        //
+        //   return { ...currentState, messages: newMessages };
+        // }
+        // else break
+        //
         break;
       }
 
