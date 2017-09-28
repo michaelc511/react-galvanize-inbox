@@ -24,9 +24,9 @@ export default function updateMessageProcess(itemId, updateType, labels) {
       token: env.AIRTABLE_TOKEN
     }) // set the session from the updated message
       .then(message => {
-        console.log('upProcess: ' + itemId);
-        console.log(updateType);
-        console.log(message);
+ //console.log('upProcess: ' + itemId);
+ //console.log(updateType);
+ //console.log(message);
 
         dispatch({ type: 'UPDATE_MESSAGE', itemId, updateType, message });
         return message;

@@ -36,7 +36,7 @@ export default function MessagesComponent({
             return selectedId === message.id;
           } // end of callback, return 100 if found, -1 if not
         );
-        //  console.log('INDEX ' + index);
+        ////console.log('INDEX ' + index);
 
         if (index > -1) {
           // if array has the selectedID,

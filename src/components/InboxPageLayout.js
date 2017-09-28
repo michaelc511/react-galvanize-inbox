@@ -6,7 +6,7 @@ import ComposeFormComponent from './ComposeFormComponent';
 
 export default function InboxPageLayout(props) {
   //
-  //  console.log('IndexPageLayout Selected: ' + props.selectedMessageIds);
+  ////console.log('IndexPageLayout Selected: ' + props.selectedMessageIds);
 
   return (
     <div className="InboxPageLayout">

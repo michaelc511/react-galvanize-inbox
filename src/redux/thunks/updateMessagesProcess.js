@@ -17,12 +17,13 @@ export default function updateMessagesProcess(updateType, labels) {
     } else if (updateType === 'addLabelsfda') {
       changes = { labels: labels.toString() };
     }
-    console.log('the labels' + labels);
+    //console.log('the labels' + labels);
     //console.log(getState().selectedMessageIds);
     let newMessages = [];
 
-    getState().selectedMessageIds.forEach(itemId => {
+    getState().selectedMessageIds.forEach((itemId, index, arr) => {
       // setting the labels
+      // DON'T RUN  arr.splice(index, 1);
 
       if (updateType === 'addLabel') {
         let theLabels = getState().messages.find(theMessage => {
@@ -35,8 +36,8 @@ export default function updateMessagesProcess(updateType, labels) {
 
             if (!theMessage.labels.includes(labels)) {
               retLabels.push(labels);
-              console.log('ret' + labels);
-              console.log(retLabels);
+              //console.log('ret' + labels);
+              //console.log(retLabels);
             }
           }
           return retLabels;
@@ -50,15 +51,15 @@ export default function updateMessagesProcess(updateType, labels) {
         let theLabels = getState().messages.find(theMessage => {
           let retLabels = theMessage.labels;
           if (theMessage.id === itemId) {
-            console.log('matched .................');
-            console.log(theMessage.labels);
+            //console.log('matched .................');
+            //console.log(theMessage.labels);
 
             retLabels = theMessage.labels;
 
             if (theMessage.labels.includes(labels)) {
               retLabels.splice(retLabels.indexOf(labels), 1);
-              console.log('ret' + labels);
-              console.log(retLabels);
+              //console.log('ret' + labels);
+              //console.log(retLabels);
             }
           }
           return retLabels;

@@ -134,13 +134,13 @@ export default class App extends Component {
   //
   // // 6D _onMarkAsReadMessage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // _onMarkAsReadMessage = itemId => {
-  //   //  console.log('READ');
+  //   ////console.log('READ');
   //   // 1. call updateMessage
   //   this.props.store.dispatch(updateMessageProcess(itemId, 'read'));
   // };
   //
   // _onMarkAsUnReadMessage = itemId => {
-  //   //  console.log('READ');
+  //   ////console.log('READ');
   //   // 1. call updateMessage
   //   this.props.store.dispatch(updateMessageProcess(itemId, 'unread'));
   // };
@@ -155,7 +155,7 @@ export default class App extends Component {
   //   this.props.store.dispatch({ type: 'COMPOSE', showComposeForm: true });
   //
   //   //Ask why this is false after setting true. works fine though ?????????????
-  //   console.log(this.state.showComposeForm);
+  // //console.log(this.state.showComposeForm);
   // };
   // /// DONE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   //
@@ -186,7 +186,7 @@ export default class App extends Component {
   //
   // // 11D _onMarkAsUnreadSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // _onMarkAsUnreadSelectedMessages = () => {
-  //   //  console.log('_onMarkAsUnreadSelectedMessagesi');
+  //   ////console.log('_onMarkAsUnreadSelectedMessagesi');
   //   //console.log(this.state.messages);
   //   this.state.selectedMessagesIds.forEach(itemId => {
   //     this._onMarkAsUnReadMessage(itemId);
@@ -195,7 +195,7 @@ export default class App extends Component {
   //
   // // 12D _onApplyLabelSelectedMessages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // _onApplyLabelSelectedMessages = label => {
-  //   console.log(this.state.selectedMessagesIds);
+  // //console.log(this.state.selectedMessagesIds);
   //   // this.state.selectedMessagesIds.forEach(itemId => {
   //   //   this.props.store.dispatch(updateMessageProcess(itemId, label));
   //   // });
@@ -272,12 +272,12 @@ export default class App extends Component {
   //   //   this.setState({
   //   //     showComposeForm: false
   //   //   });
-  //   //   console.log(this.state.showComposeForm);
+  //   // //console.log(this.state.showComposeForm);
   // };
   //
   // // // 17 _checkItem >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // _checkItem(itemId, type) {
-  //   console.log('type: ' + type);
+  // //console.log('type: ' + type);
   // }
   // /////////
 } // end of App Component

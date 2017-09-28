@@ -26,6 +26,7 @@ export default function rootReducer(
     DESELECT_ALL_MESSAGES
     DESELECT_MESSAGE
   */
+  //console.log('REDUCER .........');
   switch (action.type) {
     case 'GET_MESSAGES':
       return { ...currentState, messages: action.messages };
@@ -42,40 +43,41 @@ export default function rootReducer(
       return { ...currentState, selectedMessagesIds: newSelectedMessageIds2, selectedMessageCount: currentState.selectedMessageCount - 1 };
 
     case 'SELECT_ALL_MESSAGES':
-      console.log('SELECTALL');
+      //console.log('SELECTALL');
       let newArr = currentState.messages.map(message => message.id);
-      console.log(newArr);
+      //console.log(newArr);
       //console.log(newArr.length);
       return { ...currentState, selectedMessageIds: newArr, selectedMessageCount: newArr.length };
 
     case 'DESELECT_ALL_MESSAGES':
-      console.log('DESELECT_ALL_MESSAGES');
+      //console.log('DESELECT_ALL_MESSAGES');
 
       return { ...currentState, selectedMessageIds: [], selectedMessageCount: 0 };
 
     case 'MARK_ALL_UNREAD':
-      console.log('MARK_ALL_UNREAD');
+      //console.log('MARK_ALL_UNREAD');
 
       return { ...currentState, selectedMessageIds: [], selectedMessageCount: 0 };
     case 'COMPOSE':
-      console.log('COMPOSE');
+      //console.log('COMPOSE');
 
       return { ...currentState, showComposeForm: action.showComposeForm };
     case 'CREATE_MESSAGE':
-      console.log('CREATE_MESSAGE');
+      //console.log('CREATE_MESSAGE');
 
       return { ...currentState, messages: [action.newMessage, ...currentState.messages], showComposeForm: action.showComposeForm };
 
     case 'DELETE_MESSAGE':
-      console.log('DELETE_MESSAGE');
+      //console.log('DELETE_MESSAGE');
+      //console.log(action.itemId);
 
       let theState = currentState.messages.filter((message, index) => {
         //if (message.id !== action.itemId) {
         return message.id !== action.itemId;
         //}
       });
-      // console.log('theState');
-      // console.log(theState);
+      ////console.log('theState');
+      ////console.log(theState);
       return { ...currentState, messages: theState };
 
     case 'UPDATE_MESSAGE':
@@ -83,14 +85,14 @@ export default function rootReducer(
       // 2 star
       // 3 unstar
       // 4 labels
-      console.log('rootReducer ' + action.type);
-      console.log(action.itemId);
-      console.log(action.message);
-      console.log(action.updateType);
+      //console.log('rootReducer ' + action.type);
+      //console.log(action.itemId);
+      //console.log(action.message);
+      //console.log(action.updateType);
 
       // delete later ok?
       currentState.selectedMessageIds.forEach(itemId => {
-        console.log('haha : ' + itemId);
+        //console.log('haha : ' + itemId);
       });
 
       if (
@@ -109,14 +111,14 @@ export default function rootReducer(
       ) {
         let newMessages = currentState.messages;
         // get a new array
-        console.log('Action type ' + action.updateType);
+        //console.log('Action type ' + action.updateType);
         newMessages = newMessages.map(
           message =>
             message.id === action.itemId //
               ? action.message //(message.starred = true) //
               : message
         );
-        console.log(newMessages);
+        //console.log(newMessages);
 
         return { ...currentState, messages: newMessages };
       } else {
@@ -133,7 +135,7 @@ export default function rootReducer(
         //
         //   let selectedMessageIds = currentState.selectedMessageIds;
         //   selectedMessageIds.forEach(msgid => {
-        //     console.log('selected ids: ' + msgid);
+        //    //console.log('selected ids: ' + msgid);
         //
         //     updateMessage(msgid, {
         //       read: read
@@ -146,7 +148,7 @@ export default function rootReducer(
         //               : message
         //         ); // end of map
         //       }); // end of then
-        //     console.log(newMessages);
+        //    //console.log(newMessages);
         //   });
         //
         //   return { ...currentState, messages: newMessages };

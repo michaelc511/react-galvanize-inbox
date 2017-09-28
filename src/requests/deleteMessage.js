@@ -1,5 +1,6 @@
-export default function deleteMessages(messageId, { databaseId, token }) {
-  //console.log('deteMessag');
+export default function deleteMessage(messageId, { databaseId, token }) {
+  //console.log('deleteMessage function3333333333333333333333333333');
+  //console.log(messageId);
   return fetch(`https://api.airtable.com/v0/${databaseId}/messages/${messageId}`, {
     method: 'DELETE',
     headers: {

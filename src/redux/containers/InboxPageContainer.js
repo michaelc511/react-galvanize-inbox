@@ -9,7 +9,7 @@ import InboxPage from '../../components/InboxPage';
 
 import createMessageProcess from '../thunks/createMessageProcess';
 import getMessagesProcess from '../thunks/getMessagesProcess';
-//import deleteMessageProcess from '../thunks/deleteMessageProcess';
+import deleteMessageProcess from '../thunks/deleteMessageProcess';
 import updateMessageProcess from '../thunks/updateMessageProcess';
 import updateMessagesProcess from '../thunks/updateMessagesProcess';
 
@@ -50,14 +50,13 @@ function mapDispatchToProps(dispatch, ownProps) {
 
     onDeselectAllMessages: () => dispatch({ type: 'DESELECT_ALL_MESSAGES' }),
 
-    // not working
     // DB Processes
     onMarkAsReadSelectedMessages: () => dispatch(updateMessagesProcess('read', '')),
 
     onMarkAsUnreadSelectedMessages: () => dispatch(updateMessagesProcess('unread', '')),
     onApplyLabelSelectedMessages: labels => dispatch(updateMessagesProcess('addLabel', labels)),
     onRemoveLabelSelectedMessages: labels => dispatch(updateMessagesProcess('removeLabel', labels)),
-    // onDeleteSelectedMessages : () => dispatch( ()),
+    onDeleteSelectedMessages: itemId => dispatch(deleteMessageProcess(itemId)),
 
     // COMPOSE EMAIL
     // DB Processes

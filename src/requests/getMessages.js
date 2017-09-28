@@ -29,14 +29,14 @@ export default function getMessages({ databaseId, token }) {
       return messages;
     })
     .catch(function(error) {
-      console.log('error ' + error.message);
+    //console.log('error ' + error.message);
       return [{ id: 'error', subject: error.message }];
     });
 } // end of function
 
 function handleErrors(response) {
   if (!response.ok) {
-    console.log(response);
+  //console.log(response);
     throw Error(response.status + ' ' + response.statusText + ' error');
   }
   return response;

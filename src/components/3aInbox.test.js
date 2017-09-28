@@ -43,18 +43,18 @@ All of callbacks gets triggered when you interact with an individual message
 
 // functions
 const checkItem = itemId => {
-  console.log(`This is the itemID!!! ${itemId}`);
+//console.log(`This is the itemID!!! ${itemId}`);
 };
 // const onSelectMessage = messageId => {
-//   console.log(`This is the onSelectMessage!!! ${messageId}`);
+// //console.log(`This is the onSelectMessage!!! ${messageId}`);
 // };
 // const onDeselectMessage = messageId => {
-//   console.log(`This is the onDeselectMessage!!! ${messageId}`);
+// //console.log(`This is the onDeselectMessage!!! ${messageId}`);
 // };
 // const onStarMessage = jest.fn();
 // const onUnstarMessage = jest.fn();
 // const onMarkAsReadMessage = messageId => {
-//   console.log(`This is onMarkAsReadMessage!!! ${messageId}`);
+// //console.log(`This is onMarkAsReadMessage!!! ${messageId}`);
 // };
 
 const onStarMessage = jest.fn();

@@ -31,7 +31,7 @@ export default function MessageComponent({
 
   function handleClick(event) {
     event.preventDefault();
-    //  console.log('starred: ' + message.id);
+    ////console.log('starred: ' + message.id);
     if (message.starred) {
       onUnstarMessage(message.id);
     } else {
@@ -46,7 +46,7 @@ export default function MessageComponent({
   }
 
   function handleCheck(event) {
-    //  console.log('checkbox ' + message.id);
+    ////console.log('checkbox ' + message.id);
     if (checkStatus === '') {
       //
       onSelectMessage(message.id);
@@ -60,7 +60,7 @@ export default function MessageComponent({
   // console.log('MessageCOmp Props: ' + selected);
   // console.log(selected);
   // if (checkStatus === 'checked') {
-  //   console.log(message.id + ' Checked on MsgComp: ' + checkStatus + '');
+  // //console.log(message.id + ' Checked on MsgComp: ' + checkStatus + '');
   // }
   if (!message.labels) {
     message.labels = [];

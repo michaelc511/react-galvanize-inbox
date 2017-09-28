@@ -59,6 +59,8 @@ export default function ToolbarComponent({
   }
   function handleOnApplyLabelSelectedMessages(event) {
     event.preventDefault();
+    //console.log('Local function: ', event.target.value);
+
     onApplyLabelSelectedMessages(event.target.value);
   }
 
@@ -69,6 +71,7 @@ export default function ToolbarComponent({
 
   function onHandleDeleteSelectedMessages(event) {
     event.preventDefault();
+    //console.log('Local function: ', event.target.value);
     onDeleteSelectedMessages(event.target.value);
   }
   ////
